@@ -5,7 +5,8 @@ function formatPrice(price) {
 
 function BookTable({ books, loading, error, onEdit, onDelete, onDetail }) {
   return (
-    <>
+    <div className="table-container">
+      <h2>도서 목록</h2>
       {loading && <div className="loading">로딩 중...</div>}
 
       <table id="bookTable">
@@ -50,7 +51,7 @@ function BookTable({ books, loading, error, onEdit, onDelete, onDetail }) {
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   )
 }
 

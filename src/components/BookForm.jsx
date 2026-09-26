@@ -1,4 +1,5 @@
 import MessageBox from "./MessageBox"
+import BookFormField from './BookFormField.jsx'
 
 function BookForm({ form, isEditing, message, onChange, onSubmit, onCancel, containerRef }) {
   return (
@@ -6,55 +7,16 @@ function BookForm({ form, isEditing, message, onChange, onSubmit, onCancel, cont
       <h2>도서 등록</h2>
       <form onSubmit={onSubmit}>
         <div className="form-grid">
-          <div className="form-group">
-            <label htmlFor="title">제목:</label>
-            <input type="text" id="title" name="title" value={form.title} onChange={onChange} required />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="author">저자:</label>
-            <input type="text" id="author" name="author" value={form.author} onChange={onChange} required />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="isbn">ISBN:</label>
-            <input type="text" id="isbn" name="isbn" value={form.isbn} onChange={onChange} required />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="price">가격:</label>
-            <input type="number" id="price" name="price" value={form.price} onChange={onChange} />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="publishDate">출판일:</label>
-            <input type="date" id="publishDate" name="publishDate" value={form.publishDate} onChange={onChange} />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="language">언어:</label>
-            <input type="text" id="language" name="language" value={form.language} onChange={onChange} />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="pageCount">페이지 수:</label>
-            <input type="number" id="pageCount" name="pageCount" value={form.pageCount} onChange={onChange} />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="publisher">출판사:</label>
-            <input type="text" id="publisher" name="publisher" value={form.publisher} onChange={onChange} />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="edition">에디션:</label>
-            <input type="text" id="edition" name="edition" value={form.edition} onChange={onChange} />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="coverImageUrl">표지 이미지 URL:</label>
-            <input type="url" id="coverImageUrl" name="coverImageUrl" value={form.coverImageUrl} onChange={onChange} />
-          </div>
+          <BookFormField label="제목" name="title" value={form.title} onChange={onChange} required />
+          <BookFormField label="저자" name="author" value={form.author} onChange={onChange} required />
+          <BookFormField label="ISBN" name="isbn" value={form.isbn} onChange={onChange} required />
+          <BookFormField label="가격" name="price" type="number" value={form.price} onChange={onChange} />
+          <BookFormField label="출판일" name="publishDate" type="date" value={form.publishDate} onChange={onChange} />
+          <BookFormField label="언어" name="language" value={form.language} onChange={onChange} />
+          <BookFormField label="페이지 수" name="pageCount" type="number" value={form.pageCount} onChange={onChange} />
+          <BookFormField label="출판사" name="publisher" value={form.publisher} onChange={onChange} />
+          <BookFormField label="에디션" name="edition" value={form.edition} onChange={onChange} />
+          <BookFormField label="표지 이미지 URL" name="coverImageUrl" type="url" value={form.coverImageUrl} onChange={onChange} />
         </div>
 
         <div className="form-group">

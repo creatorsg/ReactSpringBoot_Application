@@ -2,8 +2,10 @@ import { useState, useEffect, useRef } from 'react'
 import { fetchBooks, fetchBook, createBook, updateBook, deleteBook } from './api/bookApi.js'
 import { EMPTY_FORM, toRequest, toFormValues } from './lib/bookData.js'
 import { validateBook } from './lib/validation.js'
+import { APP_MODE } from './config.js'
 import BookTable from './components/BookTable.jsx'
 import BookForm from './components/BookForm.jsx'
+import BookDetail from './components/BookDetail.jsx'
 import './style.css'
 
 function App() {
@@ -31,8 +33,10 @@ function App() {
   }
 
   useEffect(() => {
-    queueMicrotask(loadBooks)
-  }, [])
+    if (!message || message.type !== 'success') return
+    const timer = setTimeout(() => setMessage(null), 3000)
+    return () => clearTimeout(timer)
+  }, [message])
 
   useEffect(() => {
   if (!message) return
@@ -113,13 +117,25 @@ function App() {
     }
   }
   
-  function handleDetail(id) {
-    console.log('detail', id)
+  async function handleDetail(id) {
+    setMessage(null)
+    try {
+      const book = await fetchBook(id)
+      setDetailBook(book)
+    } catch (error) {
+      console.error('Error:', error)
+      setMessage({ text: error.message, type: 'error' })
+    }
   }
 
   return (
     <div>
-      <h1>도서 관리 시스템</h1>
+      <h1>
+        도서 관리 시스템{' '}
+        <span className={`app-mode ${APP_MODE === 'PROD' ? 'prod' : 'test'}`}>
+          {APP_MODE}
+        </span>
+      </h1>
       <BookForm
         form={form}
         isEditing={editingId !== null}
@@ -136,6 +152,10 @@ function App() {
         onEdit={handleEdit}
         onDelete={handleDelete}
         onDetail={handleDetail}
+      />
+      <BookDetail 
+        book={detailBook} 
+        onClose={() => setDetailBook(null)} 
       />
     </div>
   )
